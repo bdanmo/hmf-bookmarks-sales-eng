@@ -1,10 +1,12 @@
 ﻿#define tools dir
 $toolsDir = "$(Split-Path -parent $MyInvocation.MyCommand.Definition)"
+$bookmarksObjectUrl = https://sennecadeployments.blob.core.windows.net/bookmarks/sales+eng_bookmarks
+$bookmarksHtmlUrl = https://sennecadeployments.blob.core.windows.net/bookmarks/sales+eng_bookmarks.html
 
 try {
     
 
-    #create $env:ProgramData\Temp if it doesn't exist
+    #create $env:ProgramData\ChocoTemp if it doesn't exist
     Write-Output "Checking for C:\ProgramData\ChocoTemp"
     if (!(Test-Path -Path "C:\ProgramData\ChocoTemp")) {
         Write-Output "Creating C:\ProgramData\ChocoTemp"
@@ -13,9 +15,9 @@ try {
 
     Write-Output "ChocoTemp folder exists, downloading bookmarks file"
 
-    #move the sales+eng_bookmarks(.json) file in the tools dir to the temp folder, with the name "Bookmarks"
-    Write-Output "Moving bookmarks file to C:\ProgramData\ChocoTemp"
-    Move-Item -Path "$toolsDir\sales+eng_bookmarks" -Destination "C:\ProgramData\ChocoTemp\Bookmarks"
+    #pull the sales+eng_bookmarks(.json) file from the Azure Blob Storage and save it to the temp folder
+    Write-Output "Pulling bookmarks object file to C:\ProgramData\ChocoTemp"
+    Invoke-WebRequest -Uri $bookmarksObjectUrl -OutFile "C:\ProgramData\ChocoTemp\Bookmarks"
 
 
     # check if the bookmarks file exists in the temp folder, and if it does, write success message, if it does not, throw error to catch block
@@ -27,9 +29,9 @@ try {
         Throw
     }
 
-    #finally, as a fail-safe, move the bookmarks.html from the tools directory to the public desktop for manual loading by the user if needed
-    Write-Output "Moving bookmarks html file to public desktop"
-    Move-Item -Path "$toolsDir\sales+eng_bookmarks.html" -Destination "C:\Users\Public\Desktop\Bookmarks.html"
+    #finally, as a fail-safe, pull the bookmarks.html from the Azure Blob Storage and save it to the public desktop
+    Write-Output "Pulling bookmarks html file to public desktop"
+    Invoke-WebRequest -Uri $bookmarksHtmlUrl -OutFile "$env:PUBLIC\Desktop\Bookmarks.html"
 } 
 catch {
     Write-Output "Error downloading bookmarks file from Azure Blob Storage"

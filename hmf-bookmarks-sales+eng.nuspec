@@ -3,14 +3,14 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>hmf-bookmarks-sales-eng</id>
-    <version>1.0.6</version>
+    <version>1.0.7</version>
     <title>HMF Bookmarks: Sales + Eng (general)</title>
     <authors>Brendink Morank</authors>
     <projectUrl>https://github.com/bdanmo/hmf-bookmarks-sales-eng</projectUrl>
     <tags>hmf-bookmarks-sales-eng, hmf, sales, engineer, engineering, eng, csr, detailer, bookmarks</tags>
     <summary>A generally good starting-point for bookmarks for all of sales and engineering</summary>
     <description>Ah Ba-Ba-Ba, Ba-Barbara Anne</description>
-    <releaseNotes>Updated Bookmarks JSON-like file for ProgramData/ChocoTemp, for automated transfer to Chrome's local app data folder</releaseNotes>
+    <releaseNotes>Back to blob storage</releaseNotes>
     <!--<dependencies>
       <dependency id="" version="__MINIMUM_VERSION__" />
       <dependency id="" version="[__EXACT_VERSION__]" />
